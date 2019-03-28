@@ -89,7 +89,7 @@
             choiceB : "Stick",
             choiceC : "invisible wall",
             choiceD : "Pickle",
-            correct : "invisible wall",
+            correct : "Pickle",
             imgsrc : "./assets/images/Q10.gif"
         }
     ]
@@ -115,7 +115,7 @@
             
            
     function timeStart() {
-        let time= 5;
+        let time= 10;
         count= setInterval(function(){
         $("#remainingTime").text("Time Remaining:"+ time);
         time--;
@@ -139,9 +139,10 @@
     function startOver(){
         startQuiz();
     }
+   
    function nextQuestion(){
+   
     currentQindex++;
-
     if (currentQindex > lastQindex){
         return false;
     }
@@ -199,15 +200,15 @@
                 $("#image").attr("src", a.imgsrc);
                 
                     }
-                // else if (choice ===null){
+                else if (choice ===null){
                 
-                // console.log("You did not answer the question!!!");
-                // $("#noAnswer").text("Ananswered");
-                // noAnswer++;
-                // console.log(noAnswer);
-                // $("#image").append(a.imgsrc);
+                console.log("You did not answer the question!!!");
+                $("#noAnswer").text("Ananswered");
+                noAnswer++;
+                console.log(noAnswer);
+                $("#image").append(a.imgsrc);
                
-                // }
+                }
             }       
 
                     
