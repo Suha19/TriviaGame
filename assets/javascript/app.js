@@ -1,4 +1,4 @@
-$(document).ready(function() {
+
 
     //Build array for questions and answers
     let questions = [
@@ -8,7 +8,7 @@ $(document).ready(function() {
             choiceB : "Sanchez",
             choiceC : "Johnson",
             choiceD : "Jonathan",
-            correct : "B",
+            correct : "Sanchez",
             imgsrc : "./assets/images/Q1.gif"
         },
         {
@@ -17,7 +17,7 @@ $(document).ready(function() {
             choiceB : "C-143",
             choiceC : "C-175",
             choiceD : "C-123",
-            correct : "A",
+            correct : "C-137",
             imgsrc : "./assets/images/Q2.gif"
         },
         {
@@ -26,7 +26,7 @@ $(document).ready(function() {
             choiceB : "Portal Disc",
             choiceC : "Portal Wall",
             choiceD : "Portal Gun",
-            correct : "D",
+            correct : "Portal Gun",
             imgsrc : "./assets/images/Q3.gif"
         },
         {
@@ -35,7 +35,7 @@ $(document).ready(function() {
             choiceB : "Family Guy",
             choiceC : "Bob's Burgers",
             choiceD : "The Simpsons",
-            correct : "D",
+            correct : "The Simpsons",
             imgsrc : "./assets/images/Q4.gif"
         },
         {
@@ -44,7 +44,7 @@ $(document).ready(function() {
             choiceB : "Gear Head",
             choiceC : "Mr. Meeseeks",
             choiceD : "Fleeb",
-            correct : "C",
+            correct : "Mr. Meeseeks",
             imgsrc : "./assets/images/Q5.gif"
         },
         {
@@ -53,7 +53,7 @@ $(document).ready(function() {
             choiceB : "Facebook",
             choiceC : "Twitter",
             choiceD : "Tumblr",
-            correct : "A",
+            correct : "Instagram",
             imgsrc : "./assets/images/Q6.gif"
         },
         {
@@ -62,7 +62,7 @@ $(document).ready(function() {
             choiceB : "Hawk Guy",
             choiceC : "Falcon Dude",
             choiceD : "Bird Man",
-            correct : "A",
+            correct : "Bird Person",
             imgsrc : "./assets/images/Q7.gif"
         },
         {
@@ -71,7 +71,7 @@ $(document).ready(function() {
             choiceB : "Star Wars",
             choiceC : "Jurassic Park",
             choiceD : "Back to the Future",
-            correct : "C",
+            correct : "Jurassic Park",
             imgsrc : "./assets/images/Q8.gif"
         },
         {
@@ -80,7 +80,7 @@ $(document).ready(function() {
             choiceB : "Let's get this party started!",
             choiceC : "I am in great pain, please help me.",
             choiceD : "Whatever will be, will be.",
-            correct : "C",
+            correct : "I am in great pain, please help me.",
             imgsrc : "./assets/images/Q9.gif"
         },
         {
@@ -89,64 +89,125 @@ $(document).ready(function() {
             choiceB : "Stick",
             choiceC : "invisible wall",
             choiceD : "Pickle",
-            correct : "C",
+            correct : "invisible wall",
             imgsrc : "./assets/images/Q10.gif"
         }
     ]
-    
-    //Declare my variables
-     const lastQidex = questions.length-1;
-     const currentQindex =0;
-     let score =0;
-     
-    //  Stare event
-     $("#start").on("click",function(){
-        console.log ( $(this) .startQuiz());
-     });
 
-     function startQuiz(){
-         currentQuestion();
-         checkAnswer();
-          
+    //Declare my variables
+    const lastQindex = questions.length-1;
+    let currentQindex =0;
+    let correctAnswer =0;
+    let incorrectAnswer=0;
+    let noAnswer=0;
+    var intervalId;
+    var count;
+   
+    
+
+   
+    $("#start").on("click", startQuiz);
+    $(".btn").on('click', function(){
+        //get clicked radio button value
+        let userAnswer = $('input[name=choice]:checked').val();
+        checkAnswer(userAnswer)
+        })
+            
+           
+    function timeStart() {
+        let time= 5;
+        count= setInterval(function(){
+        $("#remainingTime").text("Time Remaining:"+ time);
+        time--;
+       if (time === 0){
+        timeUp()
+        clearInterval(count);
+        nextQuestion();
+         } 
+       },1000)  
+      }
+    function timeUp() {
+        $("#remainingTime").text("Time's Up!");
+     }
+    
+     
+    //  Start event
+    function startQuiz(){
+         currentQuestion();     
     }
+
+    function startOver(){
+        startQuiz();
+    }
+   function nextQuestion(){
+    currentQindex++;
+
+    if (currentQindex > lastQindex){
+        return false;
+    }
+    else{
+    currentQuestion();
+    }
+    
+   }
+
+    function donePlay(){
+    $("#correctAnswer").text("Correct Answers : " + correctAnswer);
+    $("#incorrectAnswer").text("Incorrect Answers : " + incorrectAnswer);
+    }
+
+    
     // this function is to display my question and choices
     function currentQuestion(){
-        const q = questions[currentQindex];
+        timeStart();
+        let q = questions[currentQindex];
+        
         $("#question").text(q.question);
-        $("#A").append(q.choiceA);
-        $("#B").append(q.choiceB);
-        $("#C").append(q.choiceC);
-        $("#D").append(q.choiceD);    
-    }
+        $("input#A").val(q.choiceA);
+        $("label#A").text(q.choiceA);
+        $("input#B").val(q.choiceB);
+        $("label#B").text(q.choiceB);
+        $("input#C").val(q.choiceC);
+        $("label#C").text(q.choiceC);
+        $("input#D").val(q.choiceD);
+        $("label#D").text(q.choiceD);
 
-    // this function is to check if the user's answer is right or wrong, pass it to the next question, and display the results
-   function checkAnswer(answer){
-            $( "#choice").on("click",function() { 
-            const a = questions[currentQindex];
-                if (answer === (a.correct)){
-                Score++;   
-                console.log (score)
-            
-                $("#answerType").text("Correct!");
-                $("#myscores").html("<h3>" + Score +"</h3>");
-                $("#image").append(a.imgsrc);
-         }
-         else{
-                $("#answerType").text("Incorrect!");
-                $("#image").append(a.imgsrc);   
-         }  
-        //  if(currentQindex<lastQidex){
-        //      currentQuestion++;
-             
-        //  }  
-        //  else{
-        //      //clear my timer
-                //display my score
-    
-        //  }
-         
-     
-    });
+
+       
     }
-    });
+   
+    // this function is to check if the user's answer if right or wrong, pass it to the next question, and display the results
+   function checkAnswer(choice){
+       console.log(choice)
+        let a = questions[currentQindex];
+       
+                if (choice === a.correct){
+                    console.log("right");
+                 
+                $("#answerType").text("Correct!"); 
+                correctAnswer++;  
+                console.log(correctAnswer);
+                $("#image").attr("src", a.imgsrc);
     
+                }
+            
+                else if(choice !== a.correct){
+                    console.log("wrong")
+                $("#answerType").text("Incorrect!");
+                incorrectAnswer++;  
+                console.log(incorrectAnswer);
+                $("#image").attr("src", a.imgsrc);
+                
+                    }
+                // else if (choice ===null){
+                
+                // console.log("You did not answer the question!!!");
+                // $("#noAnswer").text("Ananswered");
+                // noAnswer++;
+                // console.log(noAnswer);
+                // $("#image").append(a.imgsrc);
+               
+                // }
+            }       
+
+                    
