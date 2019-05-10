@@ -104,6 +104,7 @@ var count;
 
 //start button function 
 $("#start").on("click", startQuiz);
+$("#startOver").on("click", startOver);
 $(".btn").on('click', function () {
     //get clicked radio button value
     let userAnswer = $('input[name=choice]:checked').val();
@@ -112,7 +113,7 @@ $(".btn").on('click', function () {
 
 //Set timer for each question    
 function timeStart() {
-    let time = 5;
+    let time = 1;
     count = setInterval(function () {
         $("#remainingTime").text("Time Remaining:" + time);
         time--;
@@ -132,12 +133,14 @@ function timeUp() {
 //  Start event
 function startQuiz() {
     currentQuestion();
-    //  nextQuestion();  
 }
 
 function startOver() {
-    startQuiz();
-    nextQuestion();
+    currentQindex =0;
+    correctAnswer =0;
+    incorrectAnswer=0;
+    noAnswer=0;
+    currentQuestion();
 }
 
 function nextQuestion() {
@@ -156,8 +159,10 @@ function nextQuestion() {
 function donePlay() {
     $("#correctAnswer").text("Correct Answers : " + correctAnswer);
     $("#incorrectAnswer").text("Incorrect Answers : " + incorrectAnswer);
-    $("#noAnswer").text("Missed Answers : " + noAnswer);
+    $("#noAnswer").text("Missed Answers : " + (currentQindex-(correctAnswer+incorrectAnswer)));
     clearPage();
+    
+    
 }
 
 
