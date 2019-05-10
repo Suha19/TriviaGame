@@ -1,12 +1,20 @@
 # TriviaGame
 Create a Trivia game using JavaScript for the logic and jQuery to manipulate HTML.
 
-I created a trivia game that shows only one question until the player answers it or their time runs out.
+#Getting Started
 
--If the player selects the correct answer, It will show a screen congratulating them for choosing the right option. After a few seconds, it will display the next question
+Rick And Morty Trivia
 
--If the player runs out of time, it will display time's up and the correct answer. then it will show the next question.
+Instructions:
 
--If the player chooses the wrong answer, it will tell the player they selected the wrong option and it will display the correct answer. then it will show the next question.
+Click Start to begin the trivia. You have 30 seconds to answer each question and a counter will be displayed to show how much time is reamining. The answer to each question is displayed afterwards whether you selected the correct answer, the incorrect answer or if no answer is selected before time ran out. If no answer is selected before the timer runs out, the trivia will advance to the next question. At the end of the game, you will be shown the number of correct answers, the number of incorrect answers and any questions that went unanswered.
 
--On the final screen, it will show the number of correct answers, incorrect answers, and an option to restart the game 
+Go ahead! Click on the following link to preview the completed assignment.
+https://suha19.github.io/TriviaGame/
+
+#Built With
+HTML5
+CSS3
+Bootstrap - Framework
+JavaScript
+jQuery - JavaScript Library
