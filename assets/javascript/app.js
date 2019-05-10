@@ -113,7 +113,7 @@ $(".btn").on('click', function () {
 
 //Set timer for each question    
 function timeStart() {
-    let time = 1;
+    let time = 10;
     count = setInterval(function () {
         $("#remainingTime").text("Time Remaining:" + time);
         time--;
